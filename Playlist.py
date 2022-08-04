@@ -6,10 +6,9 @@ class Playlist:
         self.PlaylistPos=0
         self.PercentPos=0
     
-    def Remove(self, url):
-        pass
-
-    def Remove(self, index):
+    def Remove(self, url : str):
+        self.URLList.remove(url)
+        print("test")
         pass
 
     def Add(self, url):

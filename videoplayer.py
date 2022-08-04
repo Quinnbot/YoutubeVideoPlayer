@@ -74,7 +74,7 @@ class VideoPlayer:
         self.player.observe_property("percent-pos", handler=self.OnPositionChange)
 
     def OnPositionChange(self, name, percent):
-        print("------------\n{}\n{}\n---------------------".format(self.player._get_property("playtime-remaining"), percent))
+        # print("------------\n{}\n{}\n---------------------".format(self.player._get_property("playtime-remaining"), percent))
         # print(percent)
         if percent != None and (self.startupComplete and self.startupComplete != None):
             self.PLM.SetPercentPos(percent)
@@ -103,9 +103,15 @@ class VideoPlayer:
                     title = url
                 
                 frame = tk.Frame(self.PlaylistFrame.scrollable_frame, background="black", border=10)
-                tk.Label(frame, text=title).pack()
+                frame.grid_columnconfigure(2, weight=1)
+                tk.Button(frame, text="X", command= lambda URL = url : self.RemoveURL(URL)).grid(row=0, column=0)
+                tk.Label(frame, text=title).grid(row=0, column=1)
                 frame.pack(fill="both")
-    
+
+    def RemoveURL(self, URL):
+        self.PLM.Remove(URL)
+        self.UpdatePlaylistUI()
+
     def AddToPlaylist(self, url):
         self.PLM.Add(url)
         self.PLM.Save()

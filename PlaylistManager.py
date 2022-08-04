@@ -33,11 +33,9 @@ class PlaylistManager:
     def SetWorkingPlaylist(self, index=0):
         self.WorkingPlaylistIndex = index
 
-    def Remove(self, url):
-        pass
-
-    def Remove(self, index):
-        pass
+    def Remove(self, url : str):
+        print("reeee")
+        self.playlists[self.WorkingPlaylistIndex].Remove(url)
 
     def Add(self, url):
         self.playlists[self.WorkingPlaylistIndex].Add(url)
