@@ -1,3 +1,5 @@
 # .gitignore
 __pycache__/
 env
+mpv.exe
+cache/lists.playlist

@@ -3,21 +3,29 @@ import pickle
 
 class PlaylistManager:
     def __init__(self) -> None:
+        self.WorkingPlaylistIndex = 0
         try:
             self.Load()
             print("loaded playlist")
+            print(self.GetList().ToString())
         except Exception as E:
             print("loading playlists failed. reason: {}".format(E))
-            self.playlists=[]
-            self.Save()
-        
-        self.WorkingPlaylistIndex = 0
+            self.LoadDefault()
     
     def Load(self):
-        self.playlists = pickle.load(open("PLS\\lists.playlist", "rb+"))
+        self.playlists = pickle.load(open("cache\\lists.playlist", "rb"))
 
     def Save(self):
-        pickle.dump(self.playlists, open("PLS\\lists.playlist", "wb+"))
+        pickle.dump(self.playlists, open("cache\\lists.playlist", "wb+"))
+
+    def LoadDefault(self):
+        self.playlists = []
+        t = Playlist("Default ;)")
+        t.Add("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t")
+        self.playlists.append(t)
+        self.Save()
+        print(self.playlists)
+        
 
     def AddPlaylist(self, playlist:Playlist):
         self.playlists.append(playlist)
@@ -38,8 +46,10 @@ class PlaylistManager:
         pass
     def SetPercentPos(self, percent):
         self.playlists[self.WorkingPlaylistIndex].PercentPos = percent
+
     def GetPercentPos(self):
         return self.playlists[self.WorkingPlaylistIndex].PercentPos
+
     def Current(self):
         return self.playlists[self.WorkingPlaylistIndex].Current()
 
@@ -49,7 +59,7 @@ class PlaylistManager:
     def Previous(self):
         return self.playlists[self.WorkingPlaylistIndex].Previous()
 
-    def GetList(self):
+    def GetList(self) -> Playlist:
         return self.playlists[self.WorkingPlaylistIndex]
     
     def ToString(self):

@@ -17,10 +17,11 @@ class Playlist:
 
     def Shuffle(self):
         pass
+
     def Current(self):
         return self.URLList[self.PlaylistPos]
+
     def Next(self):
-        print(self.PlaylistPos)
         if self.PlaylistPos < len(self.URLList)-1:
             self.PlaylistPos+=1
         else:
@@ -31,6 +32,9 @@ class Playlist:
         if self.PlaylistPos > 0:
             self.PlaylistPos-=1
         return self.URLList[self.PlaylistPos]
+
+    def GetPlaylist(self):
+        return self.URLList
 
     def ToString(self):
         return ", ".join(self.URLList)

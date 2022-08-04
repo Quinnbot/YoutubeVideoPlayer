@@ -92,13 +92,15 @@ class VideoPlayer:
             widgets.destroy()
         
         with ytdl() as ydl:
-            for url in self.PLM.GetList().URLList:
+            for url in self.PLM.GetList().GetPlaylist():
                 title = None
-                if "tiktok" in url:
-                    title = "TokTok Short"
-                else:
+                if "youtube" in url:
                     info_dict = ydl.extract_info(url, download=False,)
                     title = info_dict.get("title", None)
+                elif "tiktok" in url:
+                    title = "TokTok Short"
+                else:
+                    title = url
                 
                 frame = tk.Frame(self.PlaylistFrame.scrollable_frame, background="black", border=10)
                 tk.Label(frame, text=title).pack()
