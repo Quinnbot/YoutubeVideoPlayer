@@ -40,12 +40,12 @@ class VideoPlayer:
         self.AddToPlaylistButton = tk.Button(self.ControlFrame, text="Add", command=lambda : self.AddToPlaylist(self.UrlEntryValue.get()) ).grid(column=4,row=0,sticky="nesw")
         
         self.Volume = tk.DoubleVar(value=50)
+        self.SetVolume(40)
         self.VolumeBar = tk.Scale(self.ControlFrame, from_=0, to=100, orient=tk.HORIZONTAL, variable=self.Volume, command=self.SetVolume).grid(column=3,row=1,sticky="nesw")
 
         #track bar
         self.PercentPos = tk.DoubleVar()
-        self.SetVolume(40)
-        self.TrackBar = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, variable=self.PercentPos).grid(row=2,sticky="nesw")
+        self.TrackBar = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, variable=self.PercentPos, command=self.SetPlaybackPos ).grid(row=2,sticky="nesw")
 
         #playlist half
         self.PlaylistFrame = ScrollableFrame(self.root)
@@ -73,9 +73,10 @@ class VideoPlayer:
         self.root.protocol("WM_DELETE_WINDOW", self.OnClose)
         self.player.observe_property("percent-pos", handler=self.OnPositionChange)
 
+    def SetPlaybackPos(self, SeekTo):
+        self.player._set_property("time-pos", SeekTo)
+
     def OnPositionChange(self, name, percent):
-        # print("------------\n{}\n{}\n---------------------".format(self.player._get_property("playtime-remaining"), percent))
-        # print(percent)
         if percent != None and (self.startupComplete and self.startupComplete != None):
             self.PLM.SetPercentPos(percent)
             self.PercentPos.set(percent)
@@ -111,6 +112,7 @@ class VideoPlayer:
     def RemoveURL(self, URL):
         self.PLM.Remove(URL)
         self.UpdatePlaylistUI()
+        self.player.play(self.PLM.Current())
 
     def AddToPlaylist(self, url):
         self.PLM.Add(url)

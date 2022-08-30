@@ -3,6 +3,7 @@ class Playlist:
     def __init__(self, name) -> None:
         self.name=name
         self.URLList=[]
+        self.MetaData=[]
         self.PlaylistPos=0
         self.PercentPos=0
     

@@ -26,7 +26,6 @@ class PlaylistManager:
         self.Save()
         print(self.playlists)
         
-
     def AddPlaylist(self, playlist:Playlist):
         self.playlists.append(playlist)
 
@@ -34,7 +33,7 @@ class PlaylistManager:
         self.WorkingPlaylistIndex = index
 
     def Remove(self, url : str):
-        print("reeee")
+        
         self.playlists[self.WorkingPlaylistIndex].Remove(url)
 
     def Add(self, url):
@@ -42,6 +41,7 @@ class PlaylistManager:
 
     def Shuffle(self):
         pass
+    
     def SetPercentPos(self, percent):
         self.playlists[self.WorkingPlaylistIndex].PercentPos = percent
 
@@ -66,9 +66,5 @@ class PlaylistManager:
 if __name__ == "__main__":
     plm = PlaylistManager()
     plm.Load()
-    pl = Playlist("default")
-    pl.Add("https://www.youtube.com/watch?v=tSvkKcyQMVU")
-    pl.Add("https://www.youtube.com/watch?v=ScHzMnAcn_s")
-    plm.AddPlaylist(pl)
 
     plm.Save()
