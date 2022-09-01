@@ -19,6 +19,9 @@ class Playlist:
         pass
 
     def Current(self):
+        if len(self.URLList) <= self.PlaylistPos:
+            self.PlaylistPos-=1
+        
         return self.URLList[self.PlaylistPos]
 
     def Next(self):
